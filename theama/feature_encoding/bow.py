@@ -27,7 +27,7 @@ class BOW(object):
         self.codebook = None
 
     def learn_codebook(self, local_features, mini_batch_kmeans=True):
-        """Function to learn the codebook for VLAD by
+        """Function to learn the codebook for BoW by
         performing K-Means clustering. The mini-batch
         K-Means algorithm can be optionally chosen for
         speed improvement, but at the cost of less
@@ -35,7 +35,7 @@ class BOW(object):
 
         Args:
             local_features: The data matrix to use to learn the
-                  codebook.
+                            codebook.
             mini_batch_kmeans: Boolean flag indicating
                                whether to use the
                                mini-batch K-Means
@@ -53,7 +53,7 @@ class BOW(object):
                     n_clusters=self.codebook_size
                 ).fit(local_features)
 
-    def compute_bow_descriptor(self, local_features):
+    def compute_feature_vector(self, local_features):
         """Function to compute the bag-of-words feature
         vector for a set of local feature vectors.
 

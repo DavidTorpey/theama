@@ -37,7 +37,7 @@ class VLAD(object):
 
         Args:
             local_features: The data matrix to use to learn the
-                  codebook.
+                            codebook.
             mini_batch_kmeans: Boolean flag indicating
                                whether to use the
                                mini-batch K-Means
@@ -55,7 +55,7 @@ class VLAD(object):
                     n_clusters=self.codebook_size
                 ).fit(local_features).cluster_centers_
 
-    def compute_vlad_descriptor(self, local_features):
+    def compute_feature_vector(self, local_features):
         """Function to compute VLAD descriptor using
         learned codebook.
 
@@ -81,7 +81,7 @@ class VLAD(object):
             cluster_feature_map[closest_visual_word_index].append(local_feature)
 
         vlad_descriptor = []
-        for visual_word_index, associated_local_features in cluster_feature_map.iteritems():
+        for visual_word_index, associated_local_features in cluster_feature_map.items():
             visual_word = self.codebook[visual_word_index]
 
             sum_of_residuals = np.zeros_like(visual_word, dtype=np.float64)
