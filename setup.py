@@ -3,13 +3,13 @@ from distutils.core import setup
 setup(
   name = 'theama',
   packages = ['theama'],
-  version = '0.0.1',
+  version = '0.0.4',
   license='apache-2.0',
   description = 'Simple interface to common computer vision algorithms.',
   author = 'David Torpey',
   author_email = 'torpey.david93@gmail.com',
   url = 'https://github.com/DavidTorpey/theama',
-  download_url = 'https://github.com/DavidTorpey/theama/archive/0.0.1.tar.gz',
+  download_url = 'https://github.com/DavidTorpey/theama/archive/0.0.4.tar.gz',
   keywords = ['bag-of-words', 'vlad', 'computer vision'],
   install_requires=[
           'scikit-learn',
