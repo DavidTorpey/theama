@@ -33,7 +33,14 @@ class BRISK(object):
             interest points.
         """
 
-        assert input_image.dtype.name == 'uint8'
+        if input_image.dtype.name != 'uint8':
+            raise Exception('Ensure dtype is uint8.')
+
+        if len(input_image.shape) > 3 or \
+                len(input_image.shape) < 2 or \
+                (len(input_image.shape) == 3 and
+                 input_image.shape[-1] not in [1, 3]):
+            raise Exception('Must be an image with 1 or 3 channels.')
 
         return self.brisk.detect(input_image)
 
@@ -50,7 +57,20 @@ class BRISK(object):
             NumPy array of BRISK descriptors.
         """
 
-        assert input_image.dtype.name == 'uint8'
+        if input_image.dtype.name != 'uint8':
+            raise Exception('Ensure dtype is uint8.')
+
+        if len(input_image.shape) > 3 \
+                or len(input_image.shape) < 2 or \
+                (len(input_image.shape) == 3 and
+                 input_image.shape[-1] not in [1, 3]):
+            raise Exception('Must be an image with 1 or 3 channels.')
+
+        if not keypoints:
+            raise Exception('No keypoints.')
+
+        if not isinstance(keypoints[0], cv2.KeyPoint):
+            raise Exception('Please input keypoints of type cv2.KeyPoint.')
 
         _, descriptors = self.brisk.compute(input_image, keypoints)
 
