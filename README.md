@@ -13,3 +13,11 @@ To install, simply run the following command:
 ```bash
 pip install theama
 ```
+
+TODO:
+- Optical flow (Farneback, KLT)
+- Optical flow volumes
+- Fisher vectors
+- Superpixels
+- HOG, LBP, Haar
+- Hough transforms
