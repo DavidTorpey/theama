@@ -28,7 +28,7 @@ class Lucas_Kanade_OF(object):
         self.feature_params = feature_params
         self.lk_params = lk_params
 
-    def perform_optical_flow(self, video):
+    def perform_optical_flow(self, video, recompute_lost_points=True):
         """Function to compute optical flow by using
         the Lucas-Kanade algorithm. This is an example of sparse optical flow
         which computes the optical flow for selected points in a given frame.
@@ -37,7 +37,15 @@ class Lucas_Kanade_OF(object):
 
         Args:
             video: is the video fed in as a numpy array.
+            recompute_lost_points: If 'True', once tracked points are lost
+            new features are computed to be tracked. If 'False' only original
+            points are tracked and returned. Default is 'True'.
         """
+
+        if type(video) is not np.ndarray:
+            raise Exception("Not a numpy array")
+        if len(video.shape) < 3 or len(video.shape) > 4:
+            raise Exception("Not a video numpy file")
 
         # params for ShiTomasi corner detection
         if self.feature_params is None:
@@ -63,12 +71,23 @@ class Lucas_Kanade_OF(object):
 
             # calculate optical flow
             p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **self.lk_params)
+            try:
+                # Select good points
+                good_new = p1[st == 1]
+                good_old = p0[st == 1]
 
-            # Select good points
-            good_new = p1[st == 1]
-            good_old = p0[st == 1]
+            except TypeError:
+                print "Original points lost at frame number ", i, "of ", f
+                if recompute_lost_points:
+                    print "Computing new features to track"
+                    p0 = cv2.goodFeaturesToTrack(old_gray, mask=None, **self.feature_params)
+                    p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **self.lk_params)
+                    good_new = p1[st == 1]
+                else:
+                    break
 
-            points.append(p0)
+            good_new = np.array(good_new)
+            points.append(good_new)
 
             # Now update the previous frame and previous points
             old_gray = frame_gray.copy()

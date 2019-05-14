@@ -107,3 +107,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# testing file
+theama/optical_flow/FireDomino.npy
