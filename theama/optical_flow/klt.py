@@ -7,7 +7,8 @@ Redistribution Licensing:
 - OpenCV: https://opencv.org/license/
 - NumPy: https://www.numpy.org/license.html#
 
-Implementation adapted from: https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_video/py_lucas_kanade/py_lucas_kanade.html
+Implementation adapted from:
+https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_video/py_lucas_kanade/py_lucas_kanade.html
 
 Module containing a Python implementation of the Lucas-Kanade
 optical flow algorithm using the Shi-Thomasi algorithm
@@ -18,7 +19,7 @@ import numpy as np
 import cv2
 
 
-class Lucas_Kanade_OF(object):
+class LucasKanade(object):
     """
     Class for the implementation of the
     Lucas-Kanade optical flow algorithm.
@@ -42,7 +43,7 @@ class Lucas_Kanade_OF(object):
             points are tracked and returned. Default is 'True'.
         """
 
-        if type(video) is not np.ndarray:
+        if not isinstance(video, np.ndarray):
             raise Exception("Not a numpy array")
         if len(video.shape) < 3 or len(video.shape) > 4:
             raise Exception("Not a video numpy file")
@@ -58,39 +59,51 @@ class Lucas_Kanade_OF(object):
         if self.lk_params is None:
             self.lk_params = dict(winSize=(15, 15),
                                   maxLevel=2,
-                                  criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
+                                  criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT,
+                                            10, 0.03))
 
         video = video.astype('uint8')
-        f, r, c, d = video.shape
+        frames, _, _, _ = video.shape
         old_gray = cv2.cvtColor(video[0], cv2.COLOR_BGR2GRAY)
-        p0 = cv2.goodFeaturesToTrack(old_gray, mask=None, **self.feature_params)
+        init_points = cv2.goodFeaturesToTrack(old_gray, mask=None, **self.feature_params)
 
         points = []
-        for i in range(1, f):
+        for i in range(1, frames):
             frame_gray = cv2.cvtColor(video[i], cv2.COLOR_BGR2GRAY)
 
             # calculate optical flow
-            p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **self.lk_params)
+            new_points, st, err = cv2.calcOpticalFlowPyrLK(old_gray,
+                                                           frame_gray,
+                                                           init_points,
+                                                           None,
+                                                           **self.lk_params)
             try:
                 # Select good points
-                good_new = p1[st == 1]
-                good_old = p0[st == 1]
+                good_points_only = new_points[st == 1]
 
             except TypeError:
-                print "Original points lost at frame number ", i, "of ", f
+                print "Original points lost at frame number ", i, "of ", frames
                 if recompute_lost_points:
                     print "Computing new features to track"
-                    p0 = cv2.goodFeaturesToTrack(old_gray, mask=None, **self.feature_params)
-                    p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **self.lk_params)
-                    good_new = p1[st == 1]
+                    init_points = cv2.goodFeaturesToTrack(old_gray,
+                                                          mask=None,
+                                                          **self.feature_params)
+                    new_points, st, err = cv2.calcOpticalFlowPyrLK(old_gray,
+                                                                   frame_gray,
+                                                                   init_points,
+                                                                   None,
+                                                                   **self.lk_params)
+
+                    good_points_only = new_points[st == 1]
+
                 else:
                     break
 
-            good_new = np.array(good_new)
-            points.append(good_new)
+            good_points_only = np.array(good_points_only)
+            points.append(good_points_only)
 
             # Now update the previous frame and previous points
             old_gray = frame_gray.copy()
-            p0 = good_new.reshape(-1, 1, 2)
+            init_points = good_points_only.reshape(-1, 1, 2)
 
         return np.array(points)

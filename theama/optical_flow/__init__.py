@@ -1,7 +1,7 @@
-from .farneback import Farneback_OF
-from .klt import Lucas_Kanade_OF
+from .farneback import Farneback
+from .klt import LucasKanade
 
 __all__ = [
-    'Farneback_OF',
-    'Lucas_Kanade_OF'
+    'Farneback',
+    'LucasKanade'
 ]

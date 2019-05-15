@@ -15,7 +15,7 @@ import numpy as np
 import cv2
 
 
-class Farneback_OF(object):
+class Farneback(object):
     """
     Class for the implementation of the
     Farneback optical flow algorithm.
@@ -36,20 +36,22 @@ class Farneback_OF(object):
         Args:
             video: is the video fed in as a numpy array.
         """
-        if type(video) is not np.ndarray:
+        if not isinstance(video, np.ndarray):
             raise Exception("Not a numpy array")
         if len(video.shape) < 3 or len(video.shape) > 4:
             raise Exception("Not a video numpy file")
 
         video = video.astype('uint8')
-        f, r, c, d = video.shape
+        frames, _, _, _ = video.shape
         previous_frame = cv2.cvtColor(video[0], cv2.COLOR_BGR2GRAY)
         flows = []
-        for i in range(1, f):
+        for i in range(1, frames):
             current_frame = cv2.cvtColor(video[i], cv2.COLOR_BGR2GRAY)
-            # flow = cv2.calcOpticalFlowFarneback(previous_frame, current_frame, None, 0.5, 3, 15, 3, 5, 1.2, 0)
+            # flow = cv2.calcOpticalFlowFarneback(previous_frame,
+            # current_frame, None, 0.5, 3, 15, 3, 5, 1.2, 0)
             # OpenCV version 2.4.9.1
-            flow = cv2.calcOpticalFlowFarneback(previous_frame, current_frame, 0.5, 3, 15, 3, 5, 1.2, 0)
+            flow = cv2.calcOpticalFlowFarneback(previous_frame, current_frame,
+                                                0.5, 3, 15, 3, 5, 1.2, 0)
             flows.append(flow)
             previous_frame = current_frame
 
