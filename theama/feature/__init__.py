@@ -1,5 +1,10 @@
-from .hog import HOG
+from .interest_point import ORB
+from .interest_point import BRISK
+from .image_features import compute_hog, compute_lbp
 
 __all__ = [
-    'HOG'
+    'ORB',
+    'BRISK',
+    'compute_lbp',
+    'compute_hog'
 ]
