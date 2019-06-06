@@ -3,9 +3,6 @@ Author: David Torpey
 
 License: Apache 2.0
 
-Redistribution Licensing:
-- OpenCV: https://opencv.org/license/
-
 General utilities file for theama.
 """
 

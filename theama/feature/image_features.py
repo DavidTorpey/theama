@@ -3,9 +3,6 @@ Author: David Torpey
 
 License: Apache 2.0
 
-Redistribution Licences:
-- Scikit-Image: https://scikit-image.org/docs/dev/license.html
-
 Module for image feature computation.
 """
 

@@ -3,10 +3,6 @@ Author: Ziyad Jappie
 
 License: Apache 2.0
 
-Redistribution Licensing:
-- OpenCV: https://opencv.org/license/
-- NumPy: https://www.numpy.org/license.html#
-
 Module containing a Python implementation of the Farneback
 algorithm to compute optical flow.
 """

@@ -3,9 +3,6 @@ Author: David Torpey
 
 License: Apache 2.0
 
-Redistribution Licensing:
-- NumPy: https://www.numpy.org/license.html#
-
 Module with unit tests for the BRISK implementation.
 """
 

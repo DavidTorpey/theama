@@ -3,10 +3,6 @@ Author: David Torpey
 
 License: Apache 2.0
 
-Redistribution Licensing:
-- Scikit-Learn: https://github.com/scikit-learn/scikit-learn/blob/master/COPYING
-- NumPy: https://www.numpy.org/license.html#
-
 Module containing a Python implementation of the VLAD
 algorithm, as defined in the original paper, which can be
 found at:

@@ -3,10 +3,6 @@ Author: Ziyad Jappie
 
 License: Apache 2.0
 
-Redistribution Licensing:
-- OpenCV: https://opencv.org/license/
-- NumPy: https://www.numpy.org/license.html#
-
 Implementation adapted from:
 https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_video/py_lucas_kanade/py_lucas_kanade.html
 
