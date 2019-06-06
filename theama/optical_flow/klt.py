@@ -82,9 +82,7 @@ class LucasKanade(object):
                 good_points_only = new_points[st == 1]
 
             except TypeError:
-                print "Original points lost at frame number ", i, "of ", frames
                 if recompute_lost_points:
-                    print "Computing new features to track"
                     init_points = cv2.goodFeaturesToTrack(old_gray,
                                                           mask=None,
                                                           **self.feature_params)

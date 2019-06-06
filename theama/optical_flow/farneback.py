@@ -21,9 +21,6 @@ class Farneback(object):
     Farneback optical flow algorithm.
     """
 
-    def __init__(self):
-        pass
-
     def perform_optical_flow(self, video):
         """Function to compute optical flow by using
         the Farneback algorithm. This is an example of dense optical flow
@@ -47,9 +44,6 @@ class Farneback(object):
         flows = []
         for i in range(1, frames):
             current_frame = cv2.cvtColor(video[i], cv2.COLOR_BGR2GRAY)
-            # flow = cv2.calcOpticalFlowFarneback(previous_frame,
-            # current_frame, None, 0.5, 3, 15, 3, 5, 1.2, 0)
-            # OpenCV version 2.4.9.1
             flow = cv2.calcOpticalFlowFarneback(previous_frame, current_frame,
                                                 0.5, 3, 15, 3, 5, 1.2, 0)
             flows.append(flow)
